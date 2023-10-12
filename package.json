@@ -1,5 +1,5 @@
 {
-  "name": "@independentcreator/cruddyforms",
+  "name": "demo-astro",
   "description": "CruddyForms: HTML form generation and validation from Typebox schemas.",
   "version": "0.1",
   "private": true,
@@ -10,7 +10,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier -w .",
-    "lint:eslint": "eslint . --ext .js,.ts,.astro"
+    "lint": "eslint src --ext .js,.ts,.astro"
   },
   "dependencies": {
     "@astrojs/rss": "^3.0.0",
@@ -22,7 +22,8 @@
     "astro-icon": "^1.0.0-next.2",
     "limax": "4.1.0",
     "lodash.merge": "^4.6.2",
-    "unpic": "^3.10.0"
+    "unpic": "^3.10.0",
+    "cruddy-forms": "workspace:cruddy-forms"
   },
   "devDependencies": {
     "@astrojs/mdx": "^1.1.0",
