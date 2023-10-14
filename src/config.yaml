@@ -11,7 +11,7 @@ metadata:
   title:
     default: CruddyForms
     template: '%s — CruddyForms'
-  description: "Generate HTML forms using Typebox."
+  description: "Generate HTML forms using TypeBox."
   robots:
     index: true
     follow: true
