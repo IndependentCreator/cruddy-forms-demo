@@ -124,12 +124,12 @@ form.normform .requirements {
     font-style: italic;
     max-height: 0;
     overflow: hidden;
-    padding: 0 0 0 10px;
+    /*padding: 0 0 0 10px;*/
     position: relative;
-    -ms-transition: .28s;
-    -webkit-transition: .28s;
-    top: -10px;
-    transition: .28s;
+   /* -ms-transition: .28s;
+    -webkit-transition: .28s;*/
+    /*top: -10px;*/
+    /*transition: .28s;*/
 }
 
 /* Select Default Styles */

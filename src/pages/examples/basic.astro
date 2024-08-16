@@ -1,0 +1,42 @@
+---
+import Steps3 from '~/components/widgets/Steps3.astro';
+import Layout from '~/layouts/PageLayout.astro';
+import SignupFormSchemaCode from '~/examples/basic/schema.ts?raw';
+import FormCode from '~/examples/basic/form.ts?raw';
+import { formHTML } from '~/examples/basic/form.ts';
+import "src/styles/normform.css";
+import "src/styles/code.css";
+
+const metadata = {
+  title: 'Examples / Basic',
+};
+---
+
+<Layout metadata={metadata}>
+  <Steps3
+    title="Example: Basic Form"
+    subtitle="In this example we show how to use the CruddyForms typescript module to create a simple form with client-side validation and serve it from your website."
+    itemsColumn1={[
+        {
+          title: 'Define the schema using Typebox',
+          code: `${SignupFormSchemaCode}`,
+        },
+      ]}
+    itemsColumn2={[
+        {
+          title: 'Generate the Form HTML',
+          description: '',
+          code: `${FormCode}`,
+        },
+        {
+          title: 'Serve the Form HTML',
+          description: 'The details of this step will depend on your chosen server-side rendering framework. Simply include the generated Form HTML from Step 2 in your server response.'
+        },
+        {
+          title: 'Resulting Form (Try it!)',
+          description: `${formHTML}`,
+        },
+      ]}
+  />
+
+</Layout>

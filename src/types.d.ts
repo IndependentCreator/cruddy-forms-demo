@@ -266,6 +266,28 @@ export interface Steps extends Headline, Widget {
   }>;
   callToAction?: string | CallToAction;
   image?: string | Image;
+  code?: string;
+  isReversed?: boolean;
+}
+
+export interface Steps2Columns extends Headline, Widget {
+  itemsColumn1: Array<{
+    title: string;
+    description?: string;
+    icon?: string;
+    classes?: Record<string, string>;
+    code?: string;
+  }>;
+  itemsColumn2: Array<{
+    title: string;
+    description?: string;
+    icon?: string;
+    classes?: Record<string, string>;
+    code?: string;
+  }>;
+  callToAction?: string | CallToAction;
+  image?: string | Image;
+  code?: string;
   isReversed?: boolean;
 }
 
