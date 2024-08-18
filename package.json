@@ -24,7 +24,7 @@
     "cruddy-forms": "file:~/cruddy-forms-0.0.0.tgz",
     "limax": "4.1.0",
     "lodash.merge": "^4.6.2",
-    "node@latest": "link:astro/node@latest",
+    "node": "^22.6.0",
     "shiki": "^1.13.0",
     "unpic": "^3.10.0"
   },

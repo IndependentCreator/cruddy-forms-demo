@@ -76,7 +76,7 @@ const metadata = {
       {
         title: 'Validation on the server using TypeBox',
         description:
-          'CruddyForms leverages <span class="font-medium"><a href="https://github.com/sinclairzx81/typebox/tree/master">TypeBox</a></span> to provide serverside validation of data submitted through your forms.',
+          'CruddyForms leverages <span class="font-medium"><a href="https://github.com/sinclairzx81/typebox/tree/master"><b>TypeBox</b></a></span> to provide serverside validation of data submitted through your forms.',
         icon: 'tabler:checkbox',
       },
       {
@@ -88,7 +88,7 @@ const metadata = {
       {
         title: 'Beautiful form styling using Normform CSS',
         description:
-          'CruddyForms generates HTML that works automatically with <span class="font-medium"><a href="https://normform.netlify.app">Normform CSS</a></span> to elegantly render your forms and user validation messages.',
+          'CruddyForms generates HTML that works automatically with <span class="font-medium"><a href="https://normform.netlify.app"><b>Normform CSS</b></a></span> to elegantly render your forms and user validation messages.',
         icon: 'tabler:file-type-css',
       },
       {
@@ -100,7 +100,7 @@ const metadata = {
       {
         title: 'Optional custom server-side validation',
         description:
-          "Need to do extra validation on the server? No problem! CruddyForms generates vanilla javascript to call your REST endpoint and display your custom error messages.",
+          "Need to do extra validation on the server? No problem! CruddyForms provides vanilla javascript to call your REST endpoint and display your custom error messages.",
         icon: 'tabler:arrows-right-left',
       },
       {
@@ -132,7 +132,7 @@ const metadata = {
       {
         title: 'Step 3: <span class="font-medium">Use CruddyForms to create the HTML for your form.</span>',
         description:
-          'In your typescript server code, use the CruddyForms module to convert your TypeBox schema into an HTML form with built-in client-side validation. Serve the form to your users.',
+          'In your typescript server code, use the CruddyForms module to convert your TypeBox schema into an HTML form with built-in client-side validation. Serve the form to clients, along with the <a href="https://normform.netlify.app"><b>Normform CSS</b></a> file',
         icon: 'tabler:check',
       },
       {
@@ -144,7 +144,7 @@ const metadata = {
       {
         title: 'Step 5 (Optional): <span class="font-medium">Add custom servier-side validation.</span>',
         description:
-          'If you need additional server-side validation, e.g. making sure a username is unique, create a REST endpoint and tell CruddyForms about it. CruddyForms will automatically generate client-side javascript to call your endpoint and display relevant error messages.',
+          'If you need additional server-side validation, e.g. making sure a username is unique, create a REST endpoint and tell CruddyForms about it. CruddyForms will add the endpoint data to the HTML form it generates, for use by <b>cruddy-client.js</b>. Serve <b>cruddy-client.js</b> along with the generated form, so that it will call your endpoint and display relevant error messages.',
         icon: 'tabler:check',
       },
     ]}
