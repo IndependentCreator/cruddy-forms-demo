@@ -25,6 +25,10 @@ export const headerData = {
           text: 'Password Reveal Button',
           href: getPermalink('/examples/password'),
         },
+        {
+          text: 'Internationalization',
+          href: getPermalink('/examples/i18n'),
+        },
       ]
     },
     {

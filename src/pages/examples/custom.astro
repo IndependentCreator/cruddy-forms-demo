@@ -1,0 +1,59 @@
+---
+import Steps3 from '~/components/widgets/Steps3.astro';
+import Layout from '~/layouts/PageLayout.astro';
+import SignupFormSchemaCode from '~/examples/custom/schema.ts?raw';
+import FormCode from '~/examples/custom/form.ts?raw';
+import { getHTMLComponent } from '~/examples/custom/form.ts';
+import EndpointCode from '~/examples/custom/username.ts?raw';
+import "src/styles/normform.css";
+import "src/styles/code.css";
+import { usersDatabase } from '~/examples/custom/username';
+export const prerender = false;
+
+const metadata = { title: 'Examples / Custom Server-side Validation' };
+
+let formData : FormData | undefined = undefined;
+if (Astro.request.method === "POST") {
+    formData = await Astro.request.formData();
+}
+const formHTML = getHTMLComponent(formData);
+---
+
+<Layout metadata={metadata}>
+  <Steps3
+    title="Example: Custom Server-side Validation"
+    subtitle="In this example we create a custom <b>REST endpoint</b> (to enforce unique usernames) and we register it with CruddyForms. CruddyForms provides vanilla javascript that calls our endpoint to perform the validation and display any validation errors."
+    itemsColumn1={[
+        {
+          title: 'Define the schema using Typebox',
+          description: 'Notice the <b>endpoint</b> attribute for the username field.<br><br>',
+          code: `${SignupFormSchemaCode}`,
+        },
+        {
+          title: "Implement the validation function, returning a response in the format that CruddyForms expects.",
+          description: "",
+          code: `${EndpointCode}`,
+        },
+      ]}
+    itemsColumn2={[
+        {
+          title: 'Expose the validation function as a REST endpoint',
+          description: 'The path to your endpoint should match the one defined in the schema in Step 1. Implementation of the endpoint will depend on your server-side rendering framework. Your endpoint just needs to pass the SearchParams from the incoming request to the validation function from Step 2, and return its response.'
+        },
+        {
+          title: 'Generate the Form HTML',
+          description: 'Be sure to call form.<b>getHTMLComponent()</b> to get the HTML which will work automatically with the javascript provided by CruddyForms.<br><br>',
+          code: `${FormCode}`,
+        },
+        {
+          title: 'Serve the Form HTML, CSS, and Javascript',
+          description: 'The details of this step will depend on your chosen server-side rendering framework. Your server response should include the generated Form HTML from Step 4, the normform.css file, and the <b>cruddy-client.js</b> script that ships with CruddyForms.'
+        },
+        {
+          title: 'Resulting Form (Try it!)',
+          description: `In the Username field, try entering one of the names from the usersDatabase that we defined in Step 2, e.g. <b>${usersDatabase[0]}</b>. Once you move on to the next field, you should see a validation error message.<br><br>${formHTML}`,
+        },
+      ]}
+  />
+</Layout>
+<script src="src/cruddy-client.js"/>

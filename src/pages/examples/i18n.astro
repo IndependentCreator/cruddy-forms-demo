@@ -1,0 +1,48 @@
+---
+import Steps3 from '~/components/widgets/Steps3.astro';
+import Layout from '~/layouts/PageLayout.astro';
+import Schema from '~/examples/i18n/schema.ts?raw';
+import FormCode from '~/examples/i18n/form.ts?raw';
+import { formHTML } from '~/examples/i18n/form.ts';
+import "src/styles/normform.css";
+import "src/styles/code.css";
+export const prerender = false;
+
+const metadata = { title: 'Examples / Internationalization' };
+
+let formData : FormData | undefined = undefined;
+if (Astro.request.method === "POST") {
+    formData = await Astro.request.formData();
+}
+const formHTML1 = formHTML("en", formData);
+const formHTML2 = formHTML("es", formData);
+const formCode = `<b>English</b><br><hr><br>${formHTML1}<b><br>Español</b><br><hr><br>${formHTML2}`;
+---
+
+<Layout metadata={metadata}>
+  <Steps3
+    title="Example: Internationalization"
+    subtitle="CruddyForms supports i18n."
+    itemsColumn1={[
+        {
+          title: 'Define the schema using Typebox',
+          code: `${Schema}`,
+        },
+        {
+          title: 'Generate the Form HTML',
+          description: 'Here we create 2 example formss.<br><br>',
+          code: `${FormCode}`,
+        },
+      ]}
+    itemsColumn2={[
+        {
+          title: 'Serve the Form HTML and CSS',
+          description: 'The details of this step will depend on your chosen server-side rendering framework. Your server response should include the generated Form HTML from Step 2 and the normform.css file.'
+        },
+        {
+          title: 'Resulting Forms',
+          description: `Try out the forms to see the messages in English or Español!<br><br>${formCode}`,
+        },
+      ]}
+  />
+</Layout>

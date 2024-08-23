@@ -1,0 +1,81 @@
+---
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import type { Steps2Columns } from '~/types';
+import { Code } from 'astro:components';
+import Headline from '../blog/Headline.astro';
+
+const {
+  title = await Astro.slots.render('title'),
+  subtitle = await Astro.slots.render('subtitle'),
+  tagline,
+  itemsColumn1 = [],
+  itemsColumn2 = [],
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render('bg'),
+} = Astro.props as Steps2Columns;
+---
+
+<WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-6xl mx-auto ${classes?.container ?? ''}`} bg={bg}>
+    <Headline
+        title={title}
+        subtitle={subtitle}
+        tagline={tagline}
+        classes={{
+          container: 'text-left rtl:text-right',
+          title: 'text-3xl lg:text-4xl',
+          ...((classes?.headline as {}) ?? {}),
+        }}
+      />
+  <div class={`flex flex-col gap-8 md:gap-12 md:flex-row`}>
+    <div class="w-full lg:w-1/2 px-0">
+      <ul class="space-y-10">
+        {
+          itemsColumn1 && itemsColumn1.length
+            ? itemsColumn1.map(({ title: title2, description, code }, index) => (
+                  <div class="pr-4 sm:pl-4 rtl:pr-0 rtl:pl-4 rtl:sm:pl-0 rtl:sm:pr-4">
+                    <span class="flex w-16 h-16 mx-auto items-center justify-center text-2xl font-bold rounded-full bg-blue-100 text-primary">
+                       { index + 1 }
+                    </span>
+                  </div>
+                <li class="flex md:-mx-4">
+                  <div class="w-full pl-4 rtl:pl-0 rtl:pr-4">
+                    <h3 class="mb-4 text-xl text-center font-semibold font-heading" set:html={title2} />
+                    <p class="text-muted dark:text-gray-400" set:html={description} />
+                  {code && (
+                    <Code code={code} lang="ts" wrap/>
+                  )}
+                  </div>
+                </li>
+              ))
+            : ''
+        }
+      </ul>
+    </div>
+    <div class="w-full lg:w-1/2 px-0">
+      <ul class="space-y-10">
+        {
+          itemsColumn2 && itemsColumn2.length
+            ? itemsColumn2.map(({ title: title2, description, code }, index) => (
+                  <div class="pr-4 sm:pl-4 rtl:pr-0 rtl:pl-4 rtl:sm:pl-0 rtl:sm:pr-4">
+                    <span class="flex w-16 h-16 mx-auto items-center justify-center text-2xl font-bold rounded-full bg-blue-100 text-primary">
+                       { itemsColumn1.length + index + 1 }
+                    </span>
+                  </div>
+                <li class="flex md:-mx-4">
+                  <div class="w-full pl-4 rtl:pl-0 rtl:pr-4">
+                    <h3 class="mb-4 text-xl text-center font-semibold font-heading" set:html={title2} />
+                    <div class="text-muted dark:text-gray-400" set:html={description} />
+                  {code && (
+                    <Code code={code} lang="ts" wrap/>
+                  )}
+                  </div>
+                </li>
+              ))
+            : ''
+        }
+      </ul>
+    </div>
+  </div>
+</WidgetWrapper>

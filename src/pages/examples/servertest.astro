@@ -1,0 +1,47 @@
+---
+import Steps3 from '~/components/widgets/Steps3.astro';
+import Layout from '~/layouts/PageLayout.astro';
+import SignupFormSchemaCode from '~/examples/basic/schema.ts?raw';
+import FormCode from '~/examples/servertest/form.ts?raw';
+import { getHTML } from '~/examples/servertest/form.ts';
+import "src/styles/normform.css";
+import "src/styles/code.css";
+export const prerender = false;
+
+const metadata = { title: 'Examples / Server-side Validation' };
+
+let formData : FormData | undefined = undefined;
+if (Astro.request.method === "POST") {
+    formData = await Astro.request.formData();
+}
+const formHTML = getHTML(formData);
+---
+
+<Layout metadata={metadata}>
+  <Steps3
+    title="Example: Testing Server-side Validation"
+    subtitle="In this example we set <b>novalidate: true</b> to disable client-side validation, in order to demonstrate server-side validation. <u><b>This is only for demo purposes.</b></u> It is recommended to always enable both client-side and server-side validation on your website."
+    itemsColumn1={[
+        {
+          title: 'Define the schema using Typebox',
+          code: `${SignupFormSchemaCode}`,
+        },
+      ]}
+    itemsColumn2={[
+        {
+          title: 'Generate the Form HTML',
+          description: 'Notice the <b>novalidate</b> attribute passed to the Form constructor. This disables client-side validation, so that we can test submitting unvalidated data to the server.<br><br>',
+          code: `${FormCode}`,
+        },
+        {
+          title: 'Serve the Form HTML and CSS',
+          description: 'The details of this step will depend on your chosen server-side rendering framework. Include the generated Form HTML from Step 2 in your server response, along with the normform.css file.'
+        },
+        {
+          title: '<div id="form"/>Resulting Form (Try it!)',
+          description: `Since client-side validation is disabled in this example, you'll be able to submit the form even if the data is invalid. You'll see some basic error messages from the server displayed at the bottom of the form.<br><br>${formHTML}`,
+        },
+      ]}
+  />
+
+</Layout>

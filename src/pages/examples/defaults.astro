@@ -1,0 +1,47 @@
+---
+import Steps3 from '~/components/widgets/Steps3.astro';
+import Layout from '~/layouts/PageLayout.astro';
+import SignupFormSchemaCode from '~/examples/basic/schema.ts?raw';
+import FormCode from '~/examples/defaults/form.ts?raw';
+import { getHTML } from '~/examples/defaults/form.ts';
+import "src/styles/normform.css";
+import "src/styles/code.css";
+export const prerender = false;
+
+const metadata = { title: 'Examples / Default Values' };
+
+let formData : FormData | undefined = undefined;
+if (Astro.request.method === "POST") {
+    formData = await Astro.request.formData();
+}
+const formHTML = getHTML(formData);
+---
+
+<Layout metadata={metadata}>
+  <Steps3
+    title="Example: Displaying Default Values"
+    subtitle="CruddyForms makes it easy to pre-fill one or more of the fields in your form."
+    itemsColumn1={[
+        {
+          title: 'Define the schema using Typebox',
+          code: `${SignupFormSchemaCode}`,
+        },
+      ]}
+    itemsColumn2={[
+        {
+          title: 'Generate the Form HTML',
+          description: 'Here we save the data submitted by the user and pass it to getHTML(), which will pre-poulate these values in the form.<br><br>',
+          code: `${FormCode}`,
+        },
+        {
+          title: 'Serve the Form HTML and CSS',
+          description: 'The details of this step will depend on your chosen server-side rendering framework. Include the generated Form HTML from Step 2 in your server response, along with the normform.css file.'
+        },
+        {
+          title: '<div id="form"/>Resulting Form (Try it!)',
+          description: `Submit some data through the form and you'll see that it appears as default values when the page reloads.<br><br>${formHTML}`,
+        },
+      ]}
+  />
+
+</Layout>
