@@ -32,11 +32,10 @@ export const headerData = {
       ]
     },
     {
-      text: 'API Documentation',
-      href: '#',
+      text: 'CruddyForms Source Code',
+      href: 'https://github.com/IndependentCreator/cruddy-forms',
     },
   ],
-  actions: [{ text: 'Download', href: 'https://github.com/IndependentCreator/cruddy-forms' }],
 };
 
 export const footerData = {
