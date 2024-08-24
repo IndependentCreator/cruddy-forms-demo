@@ -21,7 +21,7 @@
     "@fontsource-variable/inter": "^5.0.8",
     "astro": "^4.14.2",
     "astro-icon": "^1.0.0-next.2",
-    "cruddy-forms": "file:~/cruddy-forms-0.1.2.tgz",
+    "cruddy-forms": "^0.1.4",
     "limax": "4.1.0",
     "lodash.merge": "^4.6.2",
     "node": "^22.6.0",
