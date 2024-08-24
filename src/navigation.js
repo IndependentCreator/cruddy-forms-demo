@@ -32,7 +32,7 @@ export const headerData = {
       ]
     },
     {
-      text: 'CruddyForms Source Code',
+      text: 'Github',
       href: 'https://github.com/IndependentCreator/cruddy-forms',
     },
   ],
