@@ -4,25 +4,21 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import mdx from '@astrojs/mdx';
-import nodejs from '@astrojs/node';
 import partytown from '@astrojs/partytown';
 import compress from 'astro-compress';
 import icon from 'astro-icon';
 import tasks from './src/utils/tasks';
 import { readingTimeRemarkPlugin } from './src/utils/frontmatter.mjs';
-import { ANALYTICS, SITE } from './src/utils/config.ts';
-import node from "@astrojs/node";
+import { SITE } from './src/utils/config.ts';
+import cloudflare from '@astrojs/cloudflare';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const whenExternalScripts = (items = []) => ANALYTICS.vendors.googleAnalytics.id && ANALYTICS.vendors.googleAnalytics.partytown ? Array.isArray(items) ? items.map(item => item()) : [items()] : [];
+const whenExternalScripts = (items = []) => false ? Array.isArray(items) ? items.map(item => item()) : [items()] : [];
 
 // https://astro.build/config
 export default defineConfig({
   site: SITE.site,
   base: SITE.base,
   trailingSlash: SITE.trailingSlash ? 'always' : 'ignore',
-  adapter: nodejs({
-     mode: 'middleware' // or 'standalone'
-   }),
   output: 'server',
   integrations: [tailwind({
     applyBaseStyles: false
@@ -54,7 +50,7 @@ export default defineConfig({
         // Add custom languages
         // Note: Shiki has countless langs built-in, including .astro!
         // https://github.com/shikijs/shiki/blob/main/docs/languages.md
-        langs: [],
+        langs: ['typescript'],
         wrap: true,
     },
   },
@@ -65,7 +61,7 @@ export default defineConfig({
       }
     }
   },
-  adapter: node({
-    mode: "standalone"
+  adapter: cloudflare({
+    mode: 'directory'
   })
 });

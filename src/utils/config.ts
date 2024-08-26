@@ -1,7 +1,4 @@
-import fs from 'fs';
-import yaml from 'js-yaml';
 import merge from 'lodash.merge';
-
 import type { MetaData } from '~/types';
 
 export interface SiteConfig {
@@ -67,7 +64,8 @@ export interface AnalyticsConfig {
   };
 }
 
-const config = yaml.load(fs.readFileSync('src/config.yaml', 'utf8')) as {
+// Replace the yaml.load(fs.readFileSync()) call with a static configuration object
+const config: {
   site?: SiteConfig;
   metadata?: MetaDataConfig;
   i18n?: I18NConfig;
@@ -76,9 +74,89 @@ const config = yaml.load(fs.readFileSync('src/config.yaml', 'utf8')) as {
   };
   ui?: unknown;
   analytics?: unknown;
+} = {
+  site: {
+    name: 'CruddyForms',
+    site: 'https://cruddyforms.com',
+    base: '/',
+    trailingSlash: false,
+    googleSiteVerificationId: '',
+  },
+  metadata: {
+    title: {
+      default: 'CruddyForms',
+      template: '%s | CruddyForms',
+    },
+    description: 'Demonstration of cruddy-forms, a TypeScript library for generating HTML forms with TypeBox validation.',
+    robots: {
+      index: true,
+      follow: true,
+    },
+    openGraph: {
+      site_name: 'CruddyForms',
+      images: [
+        {
+          url: 'https://cruddyforms.com/default-og.png',
+          width: 1200,
+          height: 628,
+        },
+      ],
+      type: 'website',
+    },
+  },
+  i18n: {
+    language: 'en',
+    textDirection: 'ltr',
+  },
+  apps: {
+    blog: {
+      isEnabled: false,
+      postsPerPage: 6,
+      post: {
+        isEnabled: true,
+        permalink: '/blog/%slug%',
+        robots: {
+          index: true,
+          follow: true,
+        },
+      },
+      list: {
+        isEnabled: true,
+        pathname: 'blog',
+        robots: {
+          index: true,
+          follow: true,
+        },
+      },
+      category: {
+        isEnabled: true,
+        pathname: 'category',
+        robots: {
+          index: true,
+          follow: true,
+        },
+      },
+      tag: {
+        isEnabled: true,
+        pathname: 'tag',
+        robots: {
+          index: false,
+          follow: true,
+        },
+      },
+    },
+  },
+  analytics: {
+    vendors: {
+      googleAnalytics: {
+        id: undefined,
+        partytown: true,
+      },
+    },
+  },
 };
 
-const DEFAULT_SITE_NAME = 'Website';
+const DEFAULT_SITE_NAME = 'CruddyForms';
 
 const getSite = () => {
   const _default = {
@@ -86,7 +164,6 @@ const getSite = () => {
     site: undefined,
     base: '/',
     trailingSlash: false,
-
     googleSiteVerificationId: '',
   };
 

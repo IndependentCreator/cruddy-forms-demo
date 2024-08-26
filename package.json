@@ -1,10 +1,11 @@
 {
-  "name": "demo-astro",
+  "name": "cruddy-forms-demo",
   "description": "CruddyForms: HTML form generation and validation from Typebox schemas.",
   "version": "0.1",
   "private": true,
   "scripts": {
     "dev": "astro dev",
+    "deploy": "./deploy.sh",
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
@@ -13,19 +14,17 @@
     "lint": "eslint src --ext .js,.ts,.astro"
   },
   "dependencies": {
-    "@astrojs/node": "^8.3.3",
-    "@astrojs/sitemap": "^3.0.0",
-    "@astrolib/analytics": "^0.4.2",
-    "@astrolib/seo": "^1.0.0-beta.4",
+    "@astrojs/cloudflare": "^11.0.4",
+    "@astrojs/sitemap": "^3.1.6",
+    "@astrolib/seo": "1.0.0-beta.5",
     "@fontsource-variable/inter": "^5.0.8",
     "astro": "^4.14.2",
-    "astro-icon": "^1.0.0-next.2",
+    "astro-icon": "^1.1.1",
     "cruddy-forms": "^0.1.4",
     "limax": "4.1.0",
     "lodash.merge": "^4.6.2",
-    "node": "^22.6.0",
     "shiki": "^1.13.0",
-    "unpic": "^3.10.0"
+    "unpic": "^3.18.0"
   },
   "devDependencies": {
     "@astrojs/mdx": "^1.1.0",

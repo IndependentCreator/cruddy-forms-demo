@@ -1,0 +1,15 @@
+name = "cruddy-forms-demo"
+compatibility_date = "2023-10-30"
+node_compat = true
+
+main = "./dist/_worker.js/index.js"
+
+[site]
+bucket = "./dist"
+
+[build]
+command = "npm run build"
+
+[env.production]
+workers_dev = false
+route = "cruddyforms.com/*"
