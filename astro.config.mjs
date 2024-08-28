@@ -23,11 +23,7 @@ export default defineConfig({
   output: 'server',
   adapter: cloudflare({
     mode: 'directory',
-    runtime: {
-      mode: 'local',
-      persistTo: './persisted',
-    },
-    assets: 'preset',
+    functionPerRoute: false,
   }),
   integrations: [
     tailwind({
@@ -69,6 +65,9 @@ export default defineConfig({
     },
     build: {
       assetsInlineLimit: 0,
+    },
+    ssr: {
+      noExternal: ['@astrolib/*'],
     },
   },
 });
