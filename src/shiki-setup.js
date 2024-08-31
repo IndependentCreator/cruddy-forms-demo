@@ -9,25 +9,27 @@ let wasmLoaded = false;
 
 async function loadWasmOnce() {
   if (!wasmLoaded) {
+    console.log('Attempting to load WebAssembly...');
     try {
-      const response = await fetch('/wasm/onig.wasm');
-      if (!response.ok) {
-        throw new Error(`Failed to fetch onig.wasm: ${response.status} ${response.statusText}`);
-      }
-      const wasmBinary = await response.arrayBuffer();
-      await loadWasm(wasmBinary);
+      const wasmModule = await import('shiki/onig.wasm');
+      console.log('WebAssembly module imported successfully');
+      await loadWasm(wasmModule.default);
       wasmLoaded = true;
       console.log('WebAssembly loaded successfully');
     } catch (error) {
       console.error('Error loading WebAssembly:', error);
       throw error;
     }
+  } else {
+    console.log('WebAssembly already loaded');
   }
 }
 
 export async function createHighlighter() {
+  console.log('Creating highlighter...');
   try {
     await loadWasmOnce();
+    console.log('Creating highlighter core...');
     const highlighter = await createHighlighterCore({
       themes: [nord],
       langs: [js, ts, html, css],
@@ -36,9 +38,11 @@ export async function createHighlighter() {
     return highlighter;
   } catch (error) {
     console.error('Error creating highlighter:', error);
-    // Return a fallback highlighter that doesn't actually highlight
     return {
-      codeToHtml: (code) => `<pre><code>${code}</code></pre>`,
+      codeToHtml: (code) => {
+        console.log('Using fallback highlighting');
+        return `<pre><code>${code}</code></pre>`;
+      },
     };
   }
 }

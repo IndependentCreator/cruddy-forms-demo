@@ -68,7 +68,7 @@ const {
                     <h3 class="mb-4 text-xl text-center font-semibold font-heading" set:html={title2} />
                     <div class="text-muted dark:text-gray-400" set:html={description} />
                   {code && (
-                    <pre>`${code}`</pre>
+                    <CodeHighlight code={code} lang="ts"/>
                   )}
                   </div>
                 </li>

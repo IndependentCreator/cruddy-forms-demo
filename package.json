@@ -8,9 +8,9 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "wrangler pages dev ./dist",
-    "deploy": "npm run build && wrangler pages deploy ./dist",
-    "deploy:production": "npm run build && wrangler pages deploy ./dist --project-name cruddy-forms-demo --branch main",
-    "deploy:staging": "npm run build && wrangler pages deploy ./dist --project-name cruddy-forms-demo --branch staging",
+    "deploy": "pnpm run build && wrangler pages deploy ./dist",
+    "deploy:production": "pnpm run build && wrangler pages deploy ./dist --project-name cruddy-forms-demo --branch main",
+    "deploy:staging": "pnpm run build && wrangler pages deploy ./dist --project-name cruddy-forms-demo --branch staging",
     "astro": "astro"
   },
   "dependencies": {

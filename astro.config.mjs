@@ -58,17 +58,27 @@ export default defineConfig({
     resolve: {
       alias: {
         '~': path.resolve(__dirname, './src')
-      }
-    },
-    build: {
-      assetsInlineLimit: 0,
-      rollupOptions: {
-        external: ['shiki/onig.wasm'],
       },
     },
-    ssr: {
-      noExternal: ['@astrolib/*'],
+        ssr: {
       noExternal: ['shiki'],
     },
+    plugins: [
+      {
+        name: 'handle-shiki-wasm',
+        resolveId(source) {
+          if (source === 'shiki/onig.wasm') {
+            return source;
+          }
+        },
+        load(id) {
+          if (id === 'shiki/onig.wasm') {
+            const wasmPath = path.resolve(__dirname, 'node_modules/shiki/dist/onig.wasm');
+            const wasmBuffer = fs.readFileSync(wasmPath);
+            return `export default new Uint8Array([${wasmBuffer.join(',')}])`;
+          }
+        },
+      },
+    ],
   },
 });

@@ -19,3 +19,8 @@ upload.format = "service-worker"
 type = "Data"
 globs = ["**/*.wasm"]
 fallthrough = true
+
+[[rules]]
+type = "CompiledWasm"
+globs = ["**/*.wasm"]
+fallthrough = true
