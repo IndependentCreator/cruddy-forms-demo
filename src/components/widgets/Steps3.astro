@@ -2,6 +2,7 @@
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import type { Steps2Columns } from '~/types';
 import Headline from '../blog/Headline.astro';
+import CodeHighlight from '../CodeHighlight.astro';
 
 const {
   title = await Astro.slots.render('title'),
@@ -43,7 +44,7 @@ const {
                     <h3 class="mb-4 text-xl text-center font-semibold font-heading" set:html={title2} />
                     <p class="text-muted dark:text-gray-400" set:html={description} />
                   {code && (
-                    <pre>`${code}`</pre>
+                    <CodeHighlight code={code} lang="ts"/>
                   )}
                   </div>
                 </li>

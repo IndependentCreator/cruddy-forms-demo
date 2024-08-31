@@ -1,0 +1,21 @@
+compatibility_date = "2024-08-28"
+compatibility_flags = ["nodejs_compat"]
+
+[env.production]
+name = "production"
+
+[env.staging]
+name = "staging"
+
+[site]
+bucket = "./dist"
+entry-point = "dist/server/entry.mjs"
+
+[build]
+command = "pnpm run build"
+upload.format = "service-worker"
+
+[[rules]]
+type = "Data"
+globs = ["**/*.wasm"]
+fallthrough = true

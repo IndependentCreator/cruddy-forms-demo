@@ -1,0 +1,28 @@
+---
+import type { BundledLanguage } from 'shiki';
+import { createHighlighter } from '../shiki-setup.js';
+
+export interface Props {
+  code: string;
+  lang: BundledLanguage;
+}
+
+const { code, lang } = Astro.props;
+let highlightedCode = '';
+
+if (code) {
+  try {
+    const highlighter = await createHighlighter();
+    highlightedCode = highlighter.codeToHtml(code, { lang, theme: 'nord' });
+  } catch (error) {
+    console.error('Error highlighting code:', error);
+    highlightedCode = `<pre><code>${code}</code></pre>`;
+  }
+}
+---
+
+{code && (
+  <pre class="bg-slate-800 text-slate-400 p-4 rounded overflow-x-auto">
+    <code set:html={highlightedCode} />
+  </pre>
+)}

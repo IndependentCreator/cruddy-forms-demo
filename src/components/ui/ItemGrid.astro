@@ -3,6 +3,7 @@ import { twMerge } from 'tailwind-merge';
 import type { ItemGrid } from '~/types';
 import Button from './Button.astro';
 import { Icon } from 'astro-icon/components';
+import CodeHighlight from '../CodeHighlight.astro';
 
 const { items = [], columns, defaultIcon = '', classes = {} } = Astro.props as ItemGrid;
 
@@ -54,7 +55,7 @@ const {
               <div class="mt-0.5">
               {code && (
                 <div>
-                <pre>`${code}`</pre>
+                <CodeHighlight code={code} lang="ts"/>
                 </div>
               )}
               </div>

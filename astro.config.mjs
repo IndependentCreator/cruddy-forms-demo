@@ -54,9 +54,6 @@ export default defineConfig({
     })),
     tasks(),
   ],
-  markdown: {
-    syntaxHighlight: false
-  },
   vite: {
     resolve: {
       alias: {
@@ -65,9 +62,13 @@ export default defineConfig({
     },
     build: {
       assetsInlineLimit: 0,
+      rollupOptions: {
+        external: ['shiki/onig.wasm'],
+      },
     },
     ssr: {
       noExternal: ['@astrolib/*'],
+      noExternal: ['shiki'],
     },
   },
 });
