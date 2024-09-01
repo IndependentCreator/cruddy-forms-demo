@@ -12,7 +12,6 @@ import { SITE } from './src/utils/config.ts';
 import cloudflare from '@astrojs/cloudflare';
 import compress from 'astro-compress';
 
-
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const whenExternalScripts = (items = []) => false ? Array.isArray(items) ? items.map(item => item()) : [items()] : [];
 
@@ -30,14 +29,14 @@ export default defineConfig({
       applyBaseStyles: false
     }),
     compress({
-    CSS: true,
-    HTML: {
-      removeAttributeQuotes: false
-     },
-    Image: false,
-    JavaScript: true,
-    SVG: true,
-    Logger: 1
+      CSS: true,
+      HTML: {
+        removeAttributeQuotes: false
+      },
+      Image: false,
+      JavaScript: true,
+      SVG: true,
+      Logger: 1
     }),
     sitemap(),
     mdx(),
@@ -60,25 +59,5 @@ export default defineConfig({
         '~': path.resolve(__dirname, './src')
       },
     },
-        ssr: {
-      noExternal: ['shiki'],
-    },
-    plugins: [
-      {
-        name: 'handle-shiki-wasm',
-        resolveId(source) {
-          if (source === 'shiki/onig.wasm') {
-            return source;
-          }
-        },
-        load(id) {
-          if (id === 'shiki/onig.wasm') {
-            const wasmPath = path.resolve(__dirname, 'node_modules/shiki/dist/onig.wasm');
-            const wasmBuffer = fs.readFileSync(wasmPath);
-            return `export default new Uint8Array([${wasmBuffer.join(',')}])`;
-          }
-        },
-      },
-    ],
   },
 });

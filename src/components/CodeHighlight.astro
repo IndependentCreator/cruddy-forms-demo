@@ -1,5 +1,13 @@
 ---
-import { createHighlighter } from '../shiki-setup.js';
+import Prism from 'prismjs';
+import 'prismjs/themes/prism-tomorrow.css'; // You can choose a different theme
+
+// Load additional languages
+import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-jsx';
+import 'prismjs/components/prism-tsx';
+// Add more languages as needed
 
 export interface Props {
   code: string;
@@ -7,12 +15,20 @@ export interface Props {
 }
 
 const { code, lang } = Astro.props;
-const highlighter = await createHighlighter();
-const highlightedCode = highlighter.codeToHtml(code.trim(), { lang, theme: 'nord' });
+
+// Map Astro language names to Prism language names if needed
+const langMap: { [key: string]: string } = {
+  js: 'javascript',
+  ts: 'typescript',
+  // Add more mappings as needed
+};
+
+const prismLang = langMap[lang] || lang;
+const highlightedCode = Prism.highlight(code.trim(), Prism.languages[prismLang], prismLang);
 ---
 
 <div class="code-block relative font-mono text-sm">
-  <pre class={`language-${lang} overflow-x-auto`}>
+  <pre class={`language-${lang}`}>
     <code set:html={highlightedCode} />
   </pre>
   <div class="absolute top-2 right-2">
@@ -22,38 +38,32 @@ const highlightedCode = highlighter.codeToHtml(code.trim(), { lang, theme: 'nord
 
 <style>
   .code-block {
-    background-color: #2e3440; /* Nord theme background */
-    color: #d8dee9; /* Nord theme text color */
+    background-color: #2d2d2d; /* Prism Tomorrow theme background */
+    color: #ccc; /* Prism Tomorrow theme text color */
     border-radius: 0.5rem;
     padding: 1rem;
     margin: 1rem 0;
   }
-
   .code-block pre {
     margin: 0;
     padding: 0;
   }
-
   /* Custom scrollbar styling */
   .code-block pre::-webkit-scrollbar {
     height: 8px;
   }
-
   .code-block pre::-webkit-scrollbar-thumb {
-    background-color: #4c566a; /* Nord theme scrollbar color */
+    background-color: #666;
     border-radius: 4px;
   }
-
   .code-block pre::-webkit-scrollbar-track {
-    background-color: #3b4252; /* Nord theme scrollbar track color */
+    background-color: #444;
   }
-
-  /* Override Shiki's default styling */
-  .code-block :global(pre.shiki) {
+  /* Override Prism's default styling if needed */
+  .code-block :global(pre[class*="language-"]) {
     background-color: transparent !important;
   }
-
-  .code-block :global(pre.shiki code) {
+  .code-block :global(pre[class*="language-"] code) {
     display: block;
     padding: 0.5rem 0;
     line-height: 1.5;
