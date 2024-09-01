@@ -9,7 +9,7 @@ import icon from 'astro-icon';
 import tasks from './src/utils/tasks';
 import { readingTimeRemarkPlugin } from './src/utils/frontmatter.mjs';
 import { SITE } from './src/utils/config.ts';
-import node from '@astrojs/node';
+import cloudflare from '@astrojs/cloudflare';
 import compress from 'astro-compress';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -20,8 +20,9 @@ export default defineConfig({
   base: SITE.base,
   trailingSlash: SITE.trailingSlash ? 'always' : 'ignore',
   output: 'server',
-  adapter: node({
-    mode: 'standalone'
+  adapter: cloudflare({
+    mode: 'directory',
+    functionPerRoute: false,
   }),
   integrations: [
     tailwind({
