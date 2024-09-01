@@ -24,3 +24,21 @@ form.normform input:invalid:focus:not(:placeholder-shown) ~ button {
   color: #777;
   display: none;
 }
+
+.button-password-hide,
+.button-password-show {
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.button-password-hide::before,
+.button-password-show::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    bottom: -10px;
+    left: -10px;
+}
