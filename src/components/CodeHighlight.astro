@@ -8,28 +8,15 @@ export interface Props {
 
 const { code, lang } = Astro.props;
 const highlighter = await createHighlighter();
-const highlightedCode = highlighter.codeToHtml(code, { lang, theme: 'nord' });
-
-// Function to count lines of code
-const lineCount = code.split('\n').length;
+const highlightedCode = highlighter.codeToHtml(code.trim(), { lang, theme: 'nord' });
 ---
 
 <div class="code-block relative font-mono text-sm">
-  <div class="flex">
-    <div class="hidden sm:block text-slate-500 pr-4 text-right select-none" aria-hidden="true">
-      {Array(lineCount).fill(0).map((_, i) => (
-        <div>{i + 1}</div>
-      ))}
-    </div>
-    <pre class="language-{lang} flex-grow overflow-x-auto">
-      <code set:html={highlightedCode} />
-    </pre>
-  </div>
-  <div class="absolute top-2 right-2 flex space-x-2">
+  <pre class={`language-${lang} overflow-x-auto`}>
+    <code set:html={highlightedCode} />
+  </pre>
+  <div class="absolute top-2 right-2">
     <span class="bg-slate-700 text-slate-300 rounded px-2 py-1 text-xs uppercase">{lang}</span>
-    <button class="copy-button bg-slate-700 text-slate-300 rounded px-2 py-1 text-xs hover:bg-slate-600 transition-colors">
-      Copy
-    </button>
   </div>
 </div>
 
@@ -60,22 +47,15 @@ const lineCount = code.split('\n').length;
   .code-block pre::-webkit-scrollbar-track {
     background-color: #3b4252; /* Nord theme scrollbar track color */
   }
-</style>
 
-<script>
-  document.addEventListener('astro:page-load', () => {
-    const copyButtons = document.querySelectorAll('.copy-button');
-    copyButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const codeBlock = button.closest('.code-block');
-        const code = codeBlock.querySelector('code').textContent;
-        navigator.clipboard.writeText(code).then(() => {
-          button.textContent = 'Copied!';
-          setTimeout(() => {
-            button.textContent = 'Copy';
-          }, 2000);
-        });
-      });
-    });
-  });
-</script>
+  /* Override Shiki's default styling */
+  .code-block :global(pre.shiki) {
+    background-color: transparent !important;
+  }
+
+  .code-block :global(pre.shiki code) {
+    display: block;
+    padding: 0.5rem 0;
+    line-height: 1.5;
+  }
+</style>
