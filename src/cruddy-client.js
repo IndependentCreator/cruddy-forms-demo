@@ -1,18 +1,20 @@
-var __defProp = Object.defineProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __publicField = (obj, key, value) => {
-  __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-  return value;
-};
 class CruddyForm extends HTMLElement {
+  changeHandler;
+  errorValues;
+  /** Wrapper for handleChange to use with event listeners */
+  handleChangeWrapper = (event) => {
+    void this.handleChange(event);
+  };
+  /** Wrapper for handleInput to use with event listeners */
+  handleInputWrapper = (event) => {
+    void this.handleInput(event);
+  };
+  inputHandler;
+  passwordRevealHandler;
+  requirements;
+  requirementsNodes;
   constructor() {
     super();
-    __publicField(this, "changeHandler");
-    __publicField(this, "errorValues");
-    __publicField(this, "inputHandler");
-    __publicField(this, "passwordRevealHandler");
-    __publicField(this, "requirements");
-    __publicField(this, "requirementsNodes");
     this.changeHandler = this.handleChange.bind(this);
     this.errorValues = /* @__PURE__ */ new Map();
     this.inputHandler = this.handleInput.bind(this);
@@ -43,8 +45,8 @@ class CruddyForm extends HTMLElement {
             this.requirements.set(element.id, requirementsNode.innerHTML);
           }
         }
-        element.addEventListener("input", this.inputHandler);
-        element.addEventListener("change", this.changeHandler);
+        element.addEventListener("input", this.handleInputWrapper);
+        element.addEventListener("change", this.handleChangeWrapper);
       }
     });
   }
@@ -98,27 +100,24 @@ class CruddyForm extends HTMLElement {
     }
   }
   handlePasswordReveal(event) {
-    if (!(event.target instanceof HTMLElement)) {
+    if (!(event.target instanceof SVGElement) && !(event.target instanceof HTMLElement)) {
       return;
     }
-    const parentNode = event.target.parentNode;
-    if (!parentNode) {
-      return;
-    }
-    const input = parentNode.querySelector("[type]");
-    if (!input) {
-      return;
-    }
-    if (input.type === "password") {
-      input.type = "text";
-    } else {
-      input.type = "password";
-    }
-    const buttonHide = parentNode.querySelector(".button-password-hide");
-    const buttonShow = parentNode.querySelector(".button-password-show");
-    if (buttonHide && buttonShow) {
-      buttonHide.style.display = input.type === "text" ? "flex" : "none";
-      buttonShow.style.display = input.type === "text" ? "none" : "flex";
+    if (event.target.parentNode?.parentNode) {
+      const input = event.target.parentNode.parentNode.querySelector("[type]");
+      if (input instanceof HTMLInputElement) {
+        if (input.type === "password") {
+          input.type = "text";
+        } else {
+          input.type = "password";
+        }
+        const buttonHide = event.target.parentNode.parentNode.querySelector(".button-password-hide");
+        const buttonShow = event.target.parentNode.parentNode.querySelector(".button-password-show");
+        if (buttonHide instanceof HTMLElement && buttonShow instanceof HTMLElement) {
+          buttonHide.style.display = input.type === "text" ? "flex" : "none";
+          buttonShow.style.display = input.type === "text" ? "none" : "flex";
+        }
+      }
     }
   }
 }
